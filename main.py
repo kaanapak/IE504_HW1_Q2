@@ -20,7 +20,8 @@ def improvement(Network):
     resultNetwork=Network.CopyNetwork()
     while(iteration<4 and emergency_counter<400):
         emergency_counter+=1
-        network2 = resultNetwork.CopyNetwork()
+        network2=resultNetwork.CopyNetwork()
+
         random_vehicle1,random_vehicle2=network2.getRandomVehicle()
         random_node1=random_vehicle1.getRandomNode()
         capacity_F=random_vehicle1.remaining_capacity()+random_node1.demand
@@ -43,8 +44,7 @@ def improvement(Network):
                 base_cost=new_cost
 
             else:
-                print("This was not a Improvement")
-                sub_iteration +=1
+                 sub_iteration +=1
 
 
 
@@ -160,9 +160,9 @@ class Network:
     def CopyNetwork(self):
         network = Network(self.depot)
         network.total_penalty=self.total_penalty
-        network.list_vehicle=self.list_vehicle
-        network.before_noon_nodes = self.before_noon_nodes
-        network.afternoon_nodes = self.afternoon_nodes
+        network.list_vehicle=copy.deepcopy(self.list_vehicle)
+        network.before_noon_nodes = copy.deepcopy(self.before_noon_nodes)
+        network.afternoon_nodes = copy.deepcopy(self.afternoon_nodes)
         return network
 
     def add_vehicle(self,vehicle):
