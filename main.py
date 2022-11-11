@@ -39,7 +39,7 @@ def improvement(Network):
                 network2.Print()
                 resultNetwork = network2.CopyNetwork()
                 iteration+=1
-                sub_iteration=0
+                sub_iteration=1
                 base_cost=new_cost
 
             else:
