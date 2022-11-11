@@ -21,7 +21,6 @@ def improvement(Network):
     while(iteration<4 and emergency_counter<400):
         emergency_counter+=1
         network2=resultNetwork.CopyNetwork()
-
         random_vehicle1,random_vehicle2=network2.getRandomVehicle()
         random_node1=random_vehicle1.getRandomNode()
         capacity_F=random_vehicle1.remaining_capacity()+random_node1.demand
@@ -44,7 +43,8 @@ def improvement(Network):
                 base_cost=new_cost
 
             else:
-                 sub_iteration +=1
+                print("This was not a Improvement")
+                sub_iteration +=1
 
 
 
