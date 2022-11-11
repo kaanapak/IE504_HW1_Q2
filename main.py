@@ -67,8 +67,8 @@ def calculate_route_length(route):
     return geopy.distance.geodesic(node_1_coordinate, node_2_coordinate).km
 
 class Vehicle:
-    def __init__(self,depot,capacity):
-        self.time_window="not defined"
+    def __init__(self,depot,capacity,time_window):
+        self.time_window=time_window
         self.capacity=capacity
         self.current_load=0
         self.depot=depot
@@ -217,17 +217,17 @@ class Network:
         return clusters
 
     def cfrs_routing(self,cluster,time_window):
-        vehicle = Vehicle(self.depot, 60)
+        vehicle = Vehicle(self.depot, 60,time_window)
         for node in cluster:
             vehicle.add_node(node)
-        vehicle.time_window=time_window
+
         self.add_vehicle(vehicle)
 
         return vehicle.calculate_route_length()
 
     def beforenoon_insertion(self,nodes,nodes2,penalty):
-        vehicle = Vehicle(self.depot, 60)
-        vehicle.time_window="before noon"
+        vehicle = Vehicle(self.depot, 60,"before noon")
+
         vehicle.add_node(nodes[0])
         self.add_vehicle(vehicle)
 
@@ -245,8 +245,8 @@ class Network:
                     use_default = False
                     min_index=j
             if(use_default):
-                    new_vehicle = Vehicle(self.depot, 60)
-                    new_vehicle.time_window = "before noon"
+                    new_vehicle = Vehicle(self.depot, 60,"before noon")
+
                     new_vehicle.add_node(current_node)
                     self.add_vehicle(new_vehicle)
             else:
@@ -274,8 +274,8 @@ class Network:
         return new_node2_list
 
     def beforenoon_insertion_OLD(self,nodes):
-        vehicle = Vehicle(self.depot, 60)
-        vehicle.time_window="before noon"
+        vehicle = Vehicle(self.depot, 60,"before noon")
+
         vehicle.add_node(nodes[0])
         self.add_vehicle(vehicle)
 
@@ -293,16 +293,16 @@ class Network:
                     use_default = False
                     min_index=j
             if(use_default):
-                    new_vehicle = Vehicle(self.depot, 60)
-                    new_vehicle.time_window = "before noon"
+                    new_vehicle = Vehicle(self.depot, 60,"before noon")
+
                     new_vehicle.add_node(current_node)
                     self.add_vehicle(new_vehicle)
             else:
                 self.list_vehicle[min_index].smart_add_node(current_node)
 
     def afternoon_insertion(self,nodes):
-        vehicle = Vehicle(self.depot, 60)
-        vehicle.time_window = "afternoon"
+        vehicle = Vehicle(self.depot, 60,"afternoon")
+
         vehicle.add_node(nodes[0])
         self.add_vehicle(vehicle)
 
@@ -322,8 +322,8 @@ class Network:
                      use_default = False
                      min_index=j
             if(use_default):
-                    new_vehicle = Vehicle(self.depot, 60)
-                    new_vehicle.time_window = "afternoon"
+                    new_vehicle = Vehicle(self.depot, 60,"afternoon")
+
                     new_vehicle.add_node(current_node)
                     self.add_vehicle(new_vehicle)
             else:
