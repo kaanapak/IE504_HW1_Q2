@@ -34,7 +34,8 @@ def improvement(Network):
             random_vehicle2.smart_add_node(random_node1)
             new_cost=network2.totalDistance()
 
-            if(new_cost<base_cost):
+
+            if(new_cost<base_cost and random_vehicle1.current_load<=60 and random_vehicle2.current_load<=60):
                 print("Improvement found. Changed ",random_node1.name," from Vehicle ",random_vehicle1.name," with ",random_node2.name," from Vehicle",random_vehicle2.name)
                 network2.Print()
                 resultNetwork = network2.CopyNetwork()
@@ -43,7 +44,7 @@ def improvement(Network):
                 base_cost=new_cost
 
             else:
-                print("This was not a Improvement")
+                #print("This was not a Improvement")
                 sub_iteration +=1
 
 
@@ -91,6 +92,11 @@ class Vehicle:
         self.route = list(filter(lambda x: x.name != name, self.route))
         count_false_window=sum(p.time_window != self.time_window for p in self.route)
         self.penalty=10*count_false_window
+        total_demand=0
+        for node in self.route:
+            total_demand+=node.demand
+        self.current_load=total_demand
+
 
     def remaining_capacity(self):
         return self.capacity-self.current_load
@@ -396,7 +402,7 @@ if __name__ == '__main__':
 
     #network2.beforenoon_insertion_OLD(list_sorted_beforenoon)
 
-    new_afternoonlist=network2.beforenoon_insertion(list_sorted_beforenoon,list_sorted_beforenoon,penalty)
+    new_afternoonlist=network2.beforenoon_insertion(list_sorted_beforenoon,list_sorted_afternoon,penalty)
     if(len(new_afternoonlist)>0):
       network2.afternoon_insertion(new_afternoonlist)
     network.Print()
